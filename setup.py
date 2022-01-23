@@ -2,9 +2,13 @@ import os
 import re
 import subprocess
 import sys
+from pathlib import Path
 
 from setuptools import Extension, setup
 from setuptools.command.build_ext import build_ext
+
+here = Path(__file__).parent.resolve()
+long_description = (here / "README.md").read_text(encoding="utf-8")
 
 # Convert distutils Windows platform specifiers to CMake -A arguments
 PLAT_TO_CMAKE = {
@@ -121,12 +125,13 @@ class CMakeBuild(build_ext):
 # logic and declaration, and simpler if you include description/version in a file.
 setup(
     name="cvtk-release",
-    version="0.0.2",
+    version="0.0.6",
     author="Yong Yuan",
     author_email="yongyuanstu@gmail.com",
-    url='https://yongyuan.name',
+    url='https://github.com/willard-yuan/cvtk-pypi',
     description="CVTK, a Computer Vision ToolKit",
-    long_description="",
+    long_description=long_description,
+    long_description_content_type="text/markdown",
     ext_modules=[CMakeExtension("cvtk")],
     cmdclass={"build_ext": CMakeBuild},
     zip_safe=False,
